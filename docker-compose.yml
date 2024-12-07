@@ -11,6 +11,24 @@ services:
       - POSTGRES_DB=bookfinder
     volumes:
       - bookfinder-bf-data:/bitnami/postgresql 
+    networks:
+      - postgres-compose-network
+
+  pg-admin-compose:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "teste@teste.com"
+      PGADMIN_DEFAULT_PASSWORD: "teste"
+    ports:
+      - '5050:80'
+    depends_on:
+      - postgres
+    networks:
+      - postgres-compose-network
+
+networks:
+  postgres-compose-network:
+    driver: bridge
 
 volumes:
   bookfinder-bf-data:
